@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page">
+
+  <section class="hero">
+    <!--
+      To add a profile photo: drop an image at static/img/profile.jpg (a square
+      crop works best, ~400x400px), then uncomment the line below.
+    -->
+    <img src="{{ url_for('static', filename='img/profile.png') }}" alt="{{ profile.name }}" class="hero-photo">
+    <span class="hero-status"><span class="status-dot"></span>Currently building at Accenture</span>
+    <h1 class="hero-name">{{ profile.name }}</h1>
+    <div class="hero-role">{{ profile.role }}</div>
+    <p class="hero-summary">{{ profile.summary }}</p>
+    <div class="hero-actions">
+      <a href="{{ url_for('projects') }}" class="btn btn-primary">View projects</a>
+      <a href="{{ url_for('resume_download') }}" class="btn btn-ghost">Download resume</a>
+      <a href="{{ url_for('contact') }}" class="btn btn-ghost">Get in touch</a>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <h2 class="section-title">Experience</h2>
+      <span class="section-path">~/about/experience</span>
+    </div>
+    <div class="timeline">
+      {% for job in experience %}
+      <div class="timeline-item">
+        <div class="timeline-role">{{ job.role }} &middot; {{ job.company }}</div>
+        <div class="timeline-meta">{{ job.years }}</div>
+        <ul class="timeline-list">
+          {% for point in job.points %}
+          <li>{{ point }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <h2 class="section-title">Education</h2>
+      <span class="section-path">~/about/education</span>
+    </div>
+    <div class="timeline">
+      {% for school in education %}
+      <div class="timeline-item">
+        <div class="timeline-role">{{ school.school }}</div>
+        <div class="timeline-meta">{{ school.years }}</div>
+        <p style="color: var(--text-muted); font-size: 14.5px; margin: 0;">{{ school.detail }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <h2 class="section-title">Beyond the code</h2>
+      <span class="section-path">~/about/extras</span>
+    </div>
+    <ul class="timeline-list" style="padding-left: 18px;">
+      {% for item in extras %}
+      <li>{{ item }}</li>
+      {% endfor %}
+    </ul>
+  </section>
+
+</div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Submit a post{% endblock %}
+{% block content %}
+<div class="page">
+  <a href="{{ url_for('blog') }}" class="back-link">&larr; all posts</a>
+
+  <div class="page-kicker">blog/submit</div>
+  <h1 class="page-title">Write a guest post</h1>
+  <p class="page-lede">
+    Submit a post below. If you're not the site owner, it'll be sent for review first and
+    published once approved -- you'll hear back either way.
+  </p>
+
+  <form method="post" action="{{ url_for('blog_submit') }}" class="form-grid" style="margin-top: 32px; max-width: 640px;">
+    <div class="field">
+      <label for="name">Your name</label>
+      <input type="text" id="name" name="name" placeholder="Your name" required>
+    </div>
+    <div class="field">
+      <label for="email">Your email</label>
+      <input type="email" id="email" name="email" placeholder="you@example.com" required>
+    </div>
+    <div class="field">
+      <label for="title">Post title</label>
+      <input type="text" id="title" name="title" placeholder="A short, clear title" required>
+    </div>
+    <div class="field">
+      <label for="body">Post content</label>
+      <textarea id="body" name="body" rows="10" placeholder="Write your post here. Separate paragraphs with a blank line." required></textarea>
+    </div>
+    <div class="field">
+      <label for="admin_key">Owner key (leave blank if this isn't your site)</label>
+      <input type="password" id="admin_key" name="admin_key" placeholder="Only fill this in if you're the site owner" autocomplete="off">
+    </div>
+    <button type="submit" class="btn btn-primary" style="align-self: flex-start;">Submit post</button>
+  </form>
+</div>
+{% endblock %}

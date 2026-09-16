@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Skills{% endblock %}
+{% block content %}
+<div class="page">
+  <div class="page-kicker">skills.json</div>
+  <h1 class="page-title">Tools I build with</h1>
+  <p class="page-lede">A working set of languages, frameworks, and platforms across full-stack development, data, and cloud.</p>
+
+  <div class="section">
+    {% for group in skills %}
+    <div class="skill-group">
+      <div class="skill-group-title">{{ group.category }}</div>
+      <div class="chip-row">
+        {% for item in group['items'] %}
+        <span class="chip">{{ item }}</span>
+        {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

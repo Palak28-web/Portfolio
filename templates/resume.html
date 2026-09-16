@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}Resume{% endblock %}
+{% block content %}
+<div class="page">
+  <div class="resume-toolbar">
+    <div>
+      <div class="page-kicker">resume.pdf</div>
+      <h1 class="page-title" style="margin-bottom: 0;">Resume</h1>
+    </div>
+    <a href="{{ url_for('resume_download') }}" class="btn btn-primary">Download PDF</a>
+  </div>
+
+  <section class="section" style="margin-top: 0;">
+    <div class="section-head">
+      <h2 class="section-title">Experience</h2>
+      <span class="section-path">~/resume/experience</span>
+    </div>
+    <div class="timeline">
+      {% for job in experience %}
+      <div class="timeline-item">
+        <div class="timeline-role">{{ job.role }} &middot; {{ job.company }}</div>
+        <div class="timeline-meta">{{ job.years }}</div>
+        <ul class="timeline-list">
+          {% for point in job.points %}
+          <li>{{ point }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <h2 class="section-title">Education</h2>
+      <span class="section-path">~/resume/education</span>
+    </div>
+    <div class="timeline">
+      {% for school in education %}
+      <div class="timeline-item">
+        <div class="timeline-role">{{ school.school }}</div>
+        <div class="timeline-meta">{{ school.years }}</div>
+        <p style="color: var(--text-muted); font-size: 14.5px; margin: 0;">{{ school.detail }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <h2 class="section-title">Skills</h2>
+      <span class="section-path">~/resume/skills</span>
+    </div>
+    {% for group in skills %}
+    <div class="skill-group">
+      <div class="skill-group-title">{{ group.category }}</div>
+      <div class="chip-row">
+        {% for item in group['items'] %}
+        <span class="chip">{{ item }}</span>
+        {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+  </section>
+</div>
+{% endblock %}

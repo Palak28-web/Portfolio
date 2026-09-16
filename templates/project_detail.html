@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}{{ project.title }}{% endblock %}
+{% block content %}
+<div class="page">
+  <a href="{{ url_for('projects') }}" class="back-link">&larr; all projects</a>
+
+  <div class="page-kicker">projects/{{ project.slug }}</div>
+  <h1 class="page-title">{{ project.title }}</h1>
+  <p class="page-lede">{{ project.tagline }}</p>
+
+  <div class="tag-row" style="margin: 20px 0 32px;">
+    {% for t in project.tech %}
+    <span class="tag">{{ t }}</span>
+    {% endfor %}
+  </div>
+
+  <div class="detail-panel">
+    <p style="color: var(--text); margin-bottom: 20px;">{{ project.description }}</p>
+    <ul class="timeline-list" style="padding-left: 18px; margin: 0;">
+      {% for h in project.highlights %}
+      <li>{{ h }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  {% if project.link %}
+  <div style="margin-top: 28px;">
+    <a href="{{ project.link }}" target="_blank" rel="noopener" class="btn btn-primary">{{ project.link_label or "View project" }}</a>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

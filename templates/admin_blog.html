@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Manage blog{% endblock %}
+{% block content %}
+<div class="page">
+  <div class="page-kicker">admin/blog</div>
+  <h1 class="page-title">Manage blog posts</h1>
+
+  <section class="section" style="margin-top: 24px;">
+    <div class="section-head">
+      <h2 class="section-title">Pending approval</h2>
+      <span class="section-path">{{ pending|length }} waiting</span>
+    </div>
+
+    {% for p in pending %}
+    <div class="detail-panel" style="margin-bottom: 16px;">
+      <div class="project-row-head">
+        <h2 class="project-title" style="font-size: 15px;">{{ p.title }}</h2>
+        <span class="tag">pending</span>
+      </div>
+      <div class="post-date" style="margin-bottom: 10px;">{{ p.author_name }} &lt;{{ p.author_email }}&gt; &middot; {{ p.created_at[:10] }}</div>
+      <p style="color: var(--text); margin: 0 0 16px;">{{ p.body[:280] }}{{ "..." if p.body|length > 280 }}</p>
+      <div style="display: flex; gap: 10px;">
+        <a href="{{ url_for('admin_blog_approve', post_id=p.id, key=key) }}" class="btn btn-primary">Approve</a>
+        <a href="{{ url_for('admin_blog_delete', post_id=p.id, key=key) }}" class="btn btn-ghost">Reject</a>
+      </div>
+    </div>
+    {% else %}
+    <p style="color: var(--text-muted);">Nothing waiting on you right now.</p>
+    {% endfor %}
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <h2 class="section-title">Published (submitted)</h2>
+      <span class="section-path">{{ published|length }} live</span>
+    </div>
+
+    {% for p in published %}
+    <div class="detail-panel" style="margin-bottom: 16px;">
+      <div class="project-row-head">
+        <h2 class="project-title" style="font-size: 15px;">{{ p.title }}</h2>
+        <span class="tag">published</span>
+      </div>
+      <div class="post-date" style="margin-bottom: 10px;">{{ p.author_name }} &lt;{{ p.author_email }}&gt; &middot; {{ p.created_at[:10] }}</div>
+      <div style="display: flex; gap: 10px;">
+        <a href="{{ url_for('blog_post', slug=p.slug) }}" class="btn btn-ghost">View</a>
+        <a href="{{ url_for('admin_blog_delete', post_id=p.id, key=key) }}" class="btn btn-ghost">Delete</a>
+      </div>
+    </div>
+    {% else %}
+    <p style="color: var(--text-muted);">No posts submitted through the form yet -- note this list doesn't include the sample posts baked into data.py.</p>
+    {% endfor %}
+  </section>
+</div>
+{% endblock %}

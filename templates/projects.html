@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Projects{% endblock %}
+{% block content %}
+<div class="page">
+  <div class="page-kicker">projects/</div>
+  <h1 class="page-title">Things I've built</h1>
+  <p class="page-lede">Add more entries any time by editing PROJECTS in data.py -- no template changes needed.</p>
+
+  <div class="section">
+    {% for project in projects %}
+    <a href="{{ url_for('project_detail', slug=project.slug) }}" class="project-row">
+      <div class="project-row-head">
+        <h2 class="project-title">{{ project.title }}</h2>
+        <span class="project-arrow">view &rarr;</span>
+      </div>
+      <p class="project-tagline">{{ project.tagline }}</p>
+      <div class="tag-row">
+        {% for t in project.tech %}
+        <span class="tag">{{ t }}</span>
+        {% endfor %}
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

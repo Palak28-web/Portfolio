@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{{ profile.name }}{% endblock %} -- {{ profile.role }}</title>
+  <meta name="description" content="{{ profile.summary }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='img/favicon.svg') }}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='img/favicon-32.png') }}">
+  <link rel="apple-touch-icon" href="{{ url_for('static', filename='img/apple-touch-icon.png') }}">
+</head>
+<body>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-head">
+      <span class="sidebar-mark">PJ</span>
+      <div>
+        <div class="sidebar-name">{{ profile.name }}</div>
+        <div class="sidebar-role">{{ profile.role }}</div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav" aria-label="Primary">
+      <span class="nav-group-label">explorer</span>
+      <a href="{{ url_for('index') }}" class="nav-link {{ 'is-active' if request.endpoint == 'index' }}">
+        <span class="nav-icon">~</span>about.md
+      </a>
+      <a href="{{ url_for('skills') }}" class="nav-link {{ 'is-active' if request.endpoint == 'skills' }}">
+        <span class="nav-icon">~</span>skills.json
+      </a>
+      <a href="{{ url_for('projects') }}" class="nav-link {{ 'is-active' if request.endpoint in ['projects', 'project_detail'] }}">
+        <span class="nav-icon">~</span>projects/
+      </a>
+      <a href="{{ url_for('resume') }}" class="nav-link {{ 'is-active' if request.endpoint == 'resume' }}">
+        <span class="nav-icon">~</span>resume.pdf
+      </a>
+      <a href="{{ url_for('blog') }}" class="nav-link {{ 'is-active' if request.endpoint in ['blog', 'blog_post'] }}">
+        <span class="nav-icon">~</span>blog/
+      </a>
+      <a href="{{ url_for('contact') }}" class="nav-link {{ 'is-active' if request.endpoint == 'contact' }}">
+        <span class="nav-icon">~</span>contact.sh
+      </a>
+    </nav>
+
+    <div class="sidebar-foot">
+      <a href="{{ profile.github_url }}" target="_blank" rel="noopener">GitHub</a>
+      <a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </aside>
+
+  <main class="content">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-stack">
+          {% for category, message in messages %}
+            <div class="flash flash-{{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+
+    <footer class="page-footer">
+      <span>&copy; {{ profile.name }}</span>
+      <span class="dot">&middot;</span>
+      <span>built with Flask</span>
+    </footer>
+  </main>
+
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

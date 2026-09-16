@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Messages{% endblock %}
+{% block content %}
+<div class="page">
+  <div class="page-kicker">admin/messages</div>
+  <h1 class="page-title">Contact form submissions</h1>
+  <p class="page-lede">{{ messages|length }} message{{ 's' if messages|length != 1 }} saved in messages.db.</p>
+
+  <div class="section">
+    {% for m in messages %}
+    <div class="detail-panel" style="margin-bottom: 16px;">
+      <div class="project-row-head">
+        <h2 class="project-title" style="font-size: 15px;">{{ m.name }} &lt;{{ m.email }}&gt;</h2>
+        <span class="tag">{{ 'emailed' if m.emailed else 'saved only' }}</span>
+      </div>
+      <div class="post-date" style="margin-bottom: 12px;">{{ m.created_at }}</div>
+      <p style="color: var(--text); margin: 0;">{{ m.message }}</p>
+    </div>
+    {% else %}
+    <p style="color: var(--text-muted);">No messages yet.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Blog{% endblock %}
+{% block content %}
+<div class="page">
+  <div class="page-kicker">blog/</div>
+  <div class="section-head" style="border-bottom: none; padding-bottom: 0; margin-bottom: 8px;">
+    <h1 class="page-title" style="margin-bottom: 0;">Notes & write-ups</h1>
+    <a href="{{ url_for('blog_submit') }}" class="btn btn-ghost">Write a post</a>
+  </div>
+  <p class="page-lede">Sample posts below are placeholders in data.py -- everyone else's posts here were submitted and approved through the form.</p>
+
+  <div class="section" style="margin-top: 32px;">
+    {% for post in posts %}
+    <a href="{{ url_for('blog_post', slug=post.slug) }}" class="post-row">
+      <div class="post-date">{{ post.date }}{% if post.author_name %} &middot; {{ post.author_name }}{% endif %}</div>
+      <h2 class="post-title">{{ post.title }}</h2>
+      <p class="post-excerpt">{{ post.excerpt }}</p>
+    </a>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
