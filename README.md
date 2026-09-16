@@ -73,6 +73,24 @@ Apps, Render, Railway, PythonAnywhere, or a VPS behind gunicorn + nginx. For
 production, set a real `app.secret_key` (currently a placeholder in `app.py`)
 and turn off debug mode.
 
+**Not Vercel:** Vercel runs Python apps as serverless functions with a
+read-only, ephemeral filesystem, so `messages.db` can't reliably persist
+there. Render is the closest free platform with a similar "connect GitHub,
+auto-deploy" workflow that actually keeps your files.
+
+**On Render's free tier specifically:**
+- The service "spins down" after ~15 minutes of no traffic and takes 30-60
+  seconds to wake back up on the next visit -- normal for a low-traffic
+  personal portfolio, just don't be surprised by the first slow load.
+- The free tier's disk is generally stable across restarts, but isn't
+  guaranteed to survive every redeploy. For a personal portfolio this is
+  usually fine, but if `messages.db` ever matters a lot to you, consider
+  Render's paid persistent disk add-on, or swapping SQLite for a small hosted
+  database (e.g. a free Postgres instance) down the line.
+- The admin routes (`/admin/messages`, `/admin/blog`) work exactly the same
+  once deployed -- just use `https://your-app.onrender.com/admin/blog?key=...`
+  instead of `127.0.0.1:5000`.
+
 
 ## to manage the approvals rejections and the delteion of blog post go here
-http://127.0.0.1:5000/admin/blog?key=Your admin key
+url/admin/blog?key=Your admin key
